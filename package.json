@@ -1,0 +1,32 @@
+{
+  "name": "water-delivery-fullstack",
+  "version": "1.0.0",
+  "description": "* MongoDB * express * React JS * Node.js",
+  "main": "app.js",
+  "scripts": {
+    "client": "npm start --prefix client",
+    "server": "nodemon app.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arseniypom/water-delivery-backend.git"
+  },
+  "author": "Pomazkov A.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arseniypom/water-delivery-backend/issues"
+  },
+  "homepage": "https://github.com/arseniypom/water-delivery-backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "concurrently": "^6.2.1",
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.5",
+    "validator": "^13.6.0"
+  }
+}

@@ -1,0 +1,4 @@
+node_modules
+client
+/config/default.json
+.DS_Store
