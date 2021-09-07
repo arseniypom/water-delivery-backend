@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/arseniypom/water-delivery-backend#readme",
   "dependencies": {
-    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "concurrently": "^6.2.1",
     "config": "^3.3.6",
     "express": "^4.17.1",

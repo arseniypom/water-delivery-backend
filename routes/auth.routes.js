@@ -25,7 +25,7 @@ router.post(
       })
     }
 
-    const {email, password} = req.body
+    const {firstName, lastName, phone, email, password} = req.body
 
     const candidate = await User.findOne({email: email})
     if (candidate) {
@@ -33,8 +33,8 @@ router.post(
     }
 
     const hashedPassword = await bcrypt.hash(password, 12)
-    const user = User({email, password: hashedPassword})
-
+    const user = User({firstName, lastName, phone, email, password: hashedPassword})
+    console.log(user);
     await user.save()
     const token = jwt.sign(
       {userId: user.id},
@@ -48,3 +48,5 @@ router.post(
     res.status(500).json({message: 'Something went wrong, please try again'})
   }
 })
+
+module.exports = router
