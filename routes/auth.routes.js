@@ -49,4 +49,53 @@ router.post(
   }
 })
 
+// /api/auth/login
+router.post(
+  '/login',
+  [
+    check('email', 'Enter correct password').normalizeEmail().isEmail(),
+    check('password', 'Enter correct password').exists()
+  ],
+  async (req, res) => {
+  try {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Login data is invalid'
+      })
+    }
+
+    const {email, password} = req.body
+
+    const user = await User.findOne({email})
+
+    if (!user) {
+      return res.status(400).json({
+        message: `User doesn't exist`
+      })
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch) {
+      return res.status(400).json({
+        message: `Password is incorrect, try again`
+      })
+    }
+
+    const token = jwt.sign(
+      {userId: user.id},
+      config.get('jwtSecret'),
+      {expiresIn: '1h'}
+    )
+
+    res.json({token, userId: user.id})
+    
+  } catch (error) {
+    res.status(500).json({message: 'Something went wrong, please try again'})
+  }
+})
+
 module.exports = router
