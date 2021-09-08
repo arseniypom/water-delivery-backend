@@ -11,8 +11,8 @@ const router = Router()
 router.post(
   '/register',
   [
-    check('email', 'Invalid Email').isEmail(),
-    check('password', 'Password minimal length is 6 symbols').isLength({min: 6})
+    check('email', 'Неверный email').isEmail(),
+    check('password', 'Минимальная длина пароля составляет 6 символов').isLength({min: 6})
   ],
   async (req, res) => {
   try {
@@ -21,7 +21,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
-        message: 'Register data is invalid'
+        message: 'Регистрационная информация некорректна'
       })
     }
 
@@ -29,7 +29,7 @@ router.post(
 
     const candidate = await User.findOne({email: email})
     if (candidate) {
-      return res.status(400).json({message: 'This email is already registered, please use it to log in'})
+      return res.status(400).json({message: 'Пользователь с таким email уже зарегистрирован, пожалуйста, используйте его, чтобы войти'})
     }
 
     const hashedPassword = await bcrypt.hash(password, 12)
@@ -45,7 +45,7 @@ router.post(
     res.status(201).json({token, userId: user.id, message: 'Registration complete!'})
     
   } catch (error) {
-    res.status(500).json({message: 'Something went wrong, please try again'})
+    res.status(500).json({message: 'Что-то пошло не так, пожалуйста, повторите попытку позже'})
   }
 })
 
@@ -53,8 +53,8 @@ router.post(
 router.post(
   '/login',
   [
-    check('email', 'Enter correct password').normalizeEmail().isEmail(),
-    check('password', 'Enter correct password').exists()
+    check('email', 'Введите корректный email').normalizeEmail().isEmail(),
+    check('password', 'Ввкдите корректный пароль').exists()
   ],
   async (req, res) => {
   try {
@@ -63,7 +63,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
-        message: 'Login data is invalid'
+        message: 'Информация логина некорректна'
       })
     }
 
@@ -73,7 +73,7 @@ router.post(
 
     if (!user) {
       return res.status(400).json({
-        message: `User doesn't exist`
+        message: `Пользователя с таким email не существует, пожалуйста, зарегистрируйтесь`
       })
     }
 
@@ -81,7 +81,7 @@ router.post(
 
     if (!isMatch) {
       return res.status(400).json({
-        message: `Password is incorrect, try again`
+        message: `Введен неверный пароль`
       })
     }
 
@@ -94,7 +94,7 @@ router.post(
     res.json({token, userId: user.id})
     
   } catch (error) {
-    res.status(500).json({message: 'Something went wrong, please try again'})
+    res.status(500).json({message: 'Что-то пошло не так, пожалуйста, повторите попытку позже'})
   }
 })
 
