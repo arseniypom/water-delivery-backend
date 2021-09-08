@@ -1,4 +1,5 @@
 const {Router} = require('express')
+const Product = require('../models/Product')
 
 const router = Router()
 
@@ -8,11 +9,10 @@ router.get(
   '/products',
   async (req, res) => {
     try {
-      res.json({
-        onetwo: 'Some data here!'
-      })
+      const products = await Product.find({available: true})
+      res.json(products)
     } catch (error) {
-      res.status(500).json({message: 'Something went wrong, please try again'})
+      res.status(500).json({message: 'Что-то пошло не так, пожалуйста, повторите попытку позже'})
     }
   }
 )
