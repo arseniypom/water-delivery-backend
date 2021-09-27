@@ -33,7 +33,7 @@ router.get(
             query.sort({currentPrice: 'asc'})
             break;
           case 'desc':
-            query.sort({$sort: {currentPrice: -1}})
+            query.sort({currentPrice: 'desc'})
             break;
           default:
             break;
