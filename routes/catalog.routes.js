@@ -19,13 +19,11 @@ router.get(
       if (volume) {
         query.find({volume})
       }
-      if (minPrice || maxPrice) {
-        query.find({
-          $and: [
-            {currentPrice: { $gte: minPrice }},
-            {currentPrice: { $lte: maxPrice }}
-          ]
-        })
+      if (minPrice) {
+        query.find({currentPrice: { $gte: minPrice }})
+      }
+      if (maxPrice) {
+        query.find({currentPrice: { $lte: maxPrice }})
       }
       if (sortBy === 'price') {
         switch (sortOrder) {
