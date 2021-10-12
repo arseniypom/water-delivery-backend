@@ -8,11 +8,8 @@ const router = Router()
 router.get(
   '/products',
   async (req, res) => {
-    const volume = req.query.volume;
-    const minPrice = req.query.minPrice;
-    const maxPrice = req.query.maxPrice;
-    const sortBy = req.query.sortBy;
-    const sortOrder = req.query.order;
+    
+    const {volume, minPrice, maxPrice, sortBy, sortOrder} = req.query
 
     try {
       const query = Product.find({available: true})
