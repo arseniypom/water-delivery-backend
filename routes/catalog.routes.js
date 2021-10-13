@@ -9,7 +9,7 @@ router.get(
   '/products',
   async (req, res) => {
     
-    const {volume, minPrice, maxPrice, sortBy, sortOrder} = req.query
+    const {volume, minPrice, maxPrice, sortBy, order} = req.query
 
     try {
       const query = Product.find({available: true})
@@ -23,7 +23,7 @@ router.get(
         query.find({currentPrice: { $lte: maxPrice }})
       }
       if (sortBy === 'price') {
-        switch (sortOrder) {
+        switch (order) {
           case 'asc':
             query.sort({currentPrice: 'asc'})
             break;
