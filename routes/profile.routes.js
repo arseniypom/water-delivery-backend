@@ -11,9 +11,9 @@ router.get(
 
     try {
       const user = await User.findOne({_id: id})
-      const {firstName, lastName, email, orders} = user
+      const {firstName, lastName, email, phone, orders} = user
 
-      res.json({firstName, lastName, email, orders})
+      res.json({firstName, lastName, email, phone, orders})
       
     } catch (error) {
       res.status(500).json({message: 'Что-то пошло не так, пожалуйста, повторите попытку позже'})
