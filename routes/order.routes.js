@@ -20,19 +20,9 @@ router.post('/checkout', auth, async (req, res) => {
       customerId: req.user.userId, orderItems, orderInfo, date
     })
 
-    await order.save((err) => {
-      if (err) {
-        console.log(err)
-        throw new Error(`Wasn't able to save an order`)
-      }
-    })
+    await order.save()
 
-    await User.findByIdAndUpdate(req.user.userId, { $push: {orders: order._id} }, {useFindAndModify: false}, (err) => {
-      if (err) {
-        console.log(err)
-        throw new Error(`Wasn't able to find and update user data`)
-      }
-    })
+    await User.findByIdAndUpdate(req.user.userId, { $push: {orders: order._id} }, {useFindAndModify: false})
     // await order.save().then(async () => {
     //   return await User.findByIdAndUpdate(req.user.userId, { $push: {orders: order._id} }, {useFindAndModify:false})
     // })
@@ -48,7 +38,20 @@ router.post('/checkout', auth, async (req, res) => {
 router.get('/list', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId)
-    res.json(user.orders)
+    const {orders} = user
+
+    const getOrderInfo = async (orderId) => {
+      const order = await Order.findById(orderId)
+      return order.orderItems
+    }
+    const getAllOrders = async () => {
+      return Promise.all(orders.map(orderId => getOrderInfo(orderId)))
+    }
+
+    getAllOrders().then(ordersArray => {
+      res.status(201).json(ordersArray)
+    })
+
   } catch (error) {
     res.status(500).json({message: 'Something went wrong, please try again'})
   }
