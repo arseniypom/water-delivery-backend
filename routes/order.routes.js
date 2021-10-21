@@ -24,9 +24,6 @@ router.post('/checkout', auth, async (req, res) => {
     await order.save()
 
     await User.findByIdAndUpdate(req.user.userId, { $push: {orders: order._id} }, {useFindAndModify: false})
-    // await order.save().then(async () => {
-    //   return await User.findByIdAndUpdate(req.user.userId, { $push: {orders: order._id} }, {useFindAndModify:false})
-    // })
 
     res.status(201).json({order})
 
