@@ -15,6 +15,7 @@ const schema = new Schema({
     address: String,
     postalCode: String
   },
+  totalSum: {type: Number, required: true},
   date: {type: Date, default: Date.now, required: true},
 })
 
