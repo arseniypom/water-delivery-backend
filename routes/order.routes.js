@@ -8,7 +8,7 @@ const router = Router()
 // /api/order/checkout
 router.post('/checkout', auth, async (req, res) => {
   try {
-    const {products, orderInfo, date} = req.body
+    const {products, orderInfo, totalSum, date} = req.body
     const orderItems = await Object.entries(products).map((entriesArray) => {
       return {
         productId: entriesArray[0],
@@ -16,8 +16,9 @@ router.post('/checkout', auth, async (req, res) => {
       }
     })
 
+    const orderNumber = await Order.countDocuments({})
     const order = new Order({
-      customerId: req.user.userId, orderItems, orderInfo, date
+      customerId: req.user.userId, orderItems, orderInfo, orderNumber, totalSum, date
     })
 
     await order.save()
