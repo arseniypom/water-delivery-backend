@@ -40,7 +40,7 @@ router.get('/list', auth, async (req, res) => {
 
     const getOrderInfo = async (orderId) => {
       const order = await Order.findById(orderId)
-      return order.orderItems
+      return order
     }
     const getAllOrders = async () => {
       return Promise.all(orders.map(orderId => getOrderInfo(orderId)))
