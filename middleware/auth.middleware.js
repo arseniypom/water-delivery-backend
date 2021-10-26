@@ -14,8 +14,13 @@ module.exports = (req, res, next) => {
     }
 
     const decodedToken = jwt.verify(token, config.get('jwtSecret'))
-    req.user = decodedToken
-    next()
+    const {exp} = decodedToken
+    if (Date.now() >= exp * 1000) {
+      throw new Error('Token has expired')
+    } else {
+      req.user = decodedToken
+      next()
+    }
 
   } catch (e) {
     res.status(401).json({message: 'Not authorized'})
