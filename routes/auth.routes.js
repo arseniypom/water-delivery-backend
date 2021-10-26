@@ -34,7 +34,7 @@ router.post(
 
     const hashedPassword = await bcrypt.hash(password, 12)
     const user = User({firstName, lastName, phone, email, password: hashedPassword})
-    console.log(user);
+
     await user.save()
     const token = jwt.sign(
       {userId: user.id},
