@@ -17,6 +17,7 @@ const schema = new Schema({
   },
   orderNumber: {type: Number, required: true},
   totalSum: {type: Number, required: true},
+  status: {type: String, default: 'В обработке', required: true},
   date: {type: Date, default: Date.now, required: true},
 })
 
