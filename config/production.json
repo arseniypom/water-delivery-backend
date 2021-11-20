@@ -1,5 +1,5 @@
 {
-  "port": 80,
+  "port": 81,
   "jwtSecret": "10000%secret",
   "mongoUri": "mongodb+srv://arseniypom:admin123@cluster0.4sxyb.mongodb.net/app?retryWrites=true&w=majority"
 }
